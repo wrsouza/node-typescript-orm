@@ -1,0 +1,55 @@
+version: "3.4"
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    volumes:
+      - .db/mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fbstest
+    networks:
+      - mynetwork
+
+  postgres:
+    image: postgres:10.11
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - .db/postgres:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - mynetwork
+
+  oracle:
+    image: oracleinanutshell/oracle-xe-11g
+    container_name: oracle
+    restart: always
+    ports:
+      - 1521:1521
+    networks:
+      - mynetwork
+
+  sqlsrv:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: sqlsrv
+    restart: always
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "AbcD312478*"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
