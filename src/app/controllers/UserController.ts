@@ -17,7 +17,7 @@ class UserController {
       const name:string = 'Fulano da Silva'
       const email:string = 'fulano.silva@domain.com'
       const password:string = Hash.make('123456')
-      const email_verified_at:Date = new Date('2020-09-23 10:45:32') // DateFormat.format(null, 'yyyy-MM-dd HH:ii:ss');
+      const email_verified_at:Date = new Date('2020-09-23 10:45:32')
       const data = { name, email, email_verified_at, password }
       const user = await User.create(data)
       console.log(user)

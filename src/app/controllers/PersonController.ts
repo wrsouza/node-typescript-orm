@@ -18,21 +18,19 @@ class PersonController {
       for (let i=0; i<total_request; i++) {
 
         const list = await Person.where('created_at', '>=', new Date('1993-01-01 10:45:32'))
-                                 .orWhere('updated_at', '>=', new Date('1993-01-01 10:45:32'))
-                                 .offset(from)
-                                 .limit(to)
-                                 .get()
+          .orWhere('updated_at', '>=', new Date('1993-01-01 10:45:32'))
+          .offset(from)
+          .limit(to)
+          .get()
 
         const types = await Person.select(['id', 'person_type.person_type_id'])
-                                  .join('person_type', 'person_type.person_id', 'persons.id')
-                                  .whereIn('id', list.map(item => item.id))
-                                  .get()
+          .join('person_type', 'person_type.person_id', 'persons.id')
+          .whereIn('id', list.map(item => item.id))
+          .get()
 
-        const addresses = await personAddress.whereIn('person_id', list.map(item => item.id))
-                                             .get()
+        const addresses = await personAddress.whereIn('person_id', list.map(item => item.id)).get()
 
-        const contacts = await personContact.whereIn('person_id', list.map(item => item.id))
-                                             .get()                                     
+        const contacts = await personContact.whereIn('person_id', list.map(item => item.id)).get()
 
         from += limit + 1
         to = (from + limit) > total ? (total - from) : limit                                 

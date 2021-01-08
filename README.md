@@ -1,6 +1,6 @@
-# FBS Cloud Bridge
+# Bridge System - Local Database to Cloud Database
 
-Steps to run this project:
+System is under construction and utilize Oracle and Firebird
 
 1. Run `npm i` command
 2. Copy .env.example to .env and setup database settings

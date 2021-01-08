@@ -8,8 +8,8 @@ class ProductController {
   async index() {
     try {      
       const total = await Product.where('created_at', '>=', new Date('1993-01-01 10:45:32'))
-                                 .orWhere('updated_at', '>=', new Date('1993-01-01 10:45:32'))
-                                 .count()                      
+        .orWhere('updated_at', '>=', new Date('1993-01-01 10:45:32'))
+        .count()                      
       const limit = 100
       const total_request = ((total%limit)==0) ? total/limit : Math.floor(total/limit) + 1;
       let from = 0;
@@ -18,13 +18,13 @@ class ProductController {
       for (let i=0; i<total_request; i++) { 
 
         const products = await Product.select('products.id, products.code, products.name, products.tag, products.status, products.discount_limit, subcategory.group_id, category.code cod_grupo, subcategory.code cod_subgrupo')
-                                  .join('categories subcategory', 'products.category_id', 'subcategory.id')
-                                  .join('categories category', 'category.id', 'subcategory.category_id')
-                                  .where('created_at', '>=', new Date('1993-01-01 10:45:32'))
-                                  .orWhere('updated_at', '>=', new Date('1993-01-01 10:45:32'))
-                                  .offset(from)
-                                  .limit(to)
-                                  .get()
+          .join('categories subcategory', 'products.category_id', 'subcategory.id')
+          .join('categories category', 'category.id', 'subcategory.category_id')
+          .where('created_at', '>=', new Date('1993-01-01 10:45:32'))
+          .orWhere('updated_at', '>=', new Date('1993-01-01 10:45:32'))
+          .offset(from)
+          .limit(to)
+          .get()
         
         from += limit + 1
         to = (from + limit) > total ? (total - from) : limit                                 

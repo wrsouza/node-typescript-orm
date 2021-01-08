@@ -8,12 +8,12 @@ class CommercialRouteController {
   async index() {
     try {
       const commercialRoutes = await CommercialRoute.select('commercial_routes.group_id, commercial_routes.code, commercial_routes.name, commercial_routes.active, sellers.cpf_cnpj seller_cpf_cnpj, companies.cpf_cnpj company_cpf_cnpj')
-                                                    .join('persons sellers', 'commercial_routes.seller_id', 'sellers.id')
-                                                    .join('persons companies', 'commercial_routes.company_id', 'companies.id')
-                                                    .where('commercial_routes.created_at', '>=', new Date('1993-01-01 10:45:32'))
-                                                    .orWhere('commercial_routes.updated_at', '>=', new Date('1993-01-01 10:45:32'))
-                                                    .get()
-      console.log(commercialRoutes)
+        .join('persons sellers', 'commercial_routes.seller_id', 'sellers.id')
+        .join('persons companies', 'commercial_routes.company_id', 'companies.id')
+        .where('commercial_routes.created_at', '>=', new Date('1993-01-01 10:45:32'))
+        .orWhere('commercial_routes.updated_at', '>=', new Date('1993-01-01 10:45:32'))
+        .get()
+
       const response = await api.post('commercial-routes', { commercialRoutes })
       const { result: { errors } } = response.data     
                                  

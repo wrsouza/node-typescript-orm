@@ -9,10 +9,10 @@ class PaymentController {
     try {
       const listPayments = await Payment.all()
       const companies = await Payment.select('company_payment.payment_id, persons.cpf_cnpj')
-                                     .join('company_payment', 'company_payment.payment_id')
-                                     .join('persons', 'persons.id', 'company_payment.company_id')
-                                     .whereIn('company_payment.payment_id', listPayments.map(item => item.id))
-                                     .get()
+        .join('company_payment', 'company_payment.payment_id')
+        .join('persons', 'persons.id', 'company_payment.company_id')
+        .whereIn('company_payment.payment_id', listPayments.map(item => item.id))
+        .get()
 
       const payments = listPayments.map(payment => ({
         ...payment,

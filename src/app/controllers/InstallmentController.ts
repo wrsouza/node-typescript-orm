@@ -9,15 +9,15 @@ class InstallmentController {
     try {
       const listInstallments = await Installment.all()
       const companies = await Installment.select('company_installment.installment_id, persons.cpf_cnpj')
-                                     .join('company_installment', 'company_installment.installment_id')
-                                     .join('persons', 'persons.id', 'company_installment.company_id')
-                                     .whereIn('company_installment.installment_id', listInstallments.map(item => item.id))
-                                     .get()
+        .join('company_installment', 'company_installment.installment_id')
+        .join('persons', 'persons.id', 'company_installment.company_id')
+        .whereIn('company_installment.installment_id', listInstallments.map(item => item.id))
+        .get()
       const customers = await Installment.select('customer_installment.installment_id, persons.cpf_cnpj')
-                                     .join('customer_installment', 'customer_installment.installment_id')
-                                     .join('persons', 'persons.id', 'customer_installment.customer_id')
-                                     .whereIn('customer_installment.installment_id', listInstallments.map(item => item.id))
-                                     .get()
+        .join('customer_installment', 'customer_installment.installment_id')
+        .join('persons', 'persons.id', 'customer_installment.customer_id')
+        .whereIn('customer_installment.installment_id', listInstallments.map(item => item.id))
+        .get()
       const installments = listInstallments.map(installment => ({
         ...installment,
         companies: companies.filter(company => company.installment_id === installment.id).map(company => company.cpf_cnpj),
